@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "src/bottest.js",
   "scripts": {
-    "preinstall": "npm i typings",
+    "preinstall": "npm i typings typescript",
     "postinstall": "typings install && tsc",
     "start": "node index",
     "watch": "gulp",
