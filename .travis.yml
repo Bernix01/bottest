@@ -20,5 +20,7 @@ services: mongodb
 deploy:
   provider: heroku
   app: bottest-guillermo
+  run:
+    - "cd dist/ && npm start"
   api_key:
     secure: uEK8yRY9fiILjP/0HA0uvVEPv9YQcrnOd6KUxyNYbWyrLeNNphRlQVAxkt9gFfadPvu9S01XnxQwZ+HxWoHjd7rl9D4UA1lpCRY94cPcc274Zm5ZLEA8avQqkGCcJCriYFc+g6l00j1cyELM/KYWJJxesnmCZNR5pmSypfH7lt+oZ89MABmxwGN87ja93skNHQsotx200fT/ALWZJCEYxY2S4S3mKOgRXVy3iW4lVaSLpC6Z0zuQUi0i2fvmZIexk4wVzAQmnMXqs79KwCzBbwml/gvcY6G94j3wBtaJdcrTTH4TabyBKY5nruyxGmhzJ5aQ+9iRPwS3YRHYLdQij9X+5Ll8jm4OexNntbO2DC1wvMdQb6j0Iq/wSx+5VLbBZLVCZ/pfuseYOs1xbxZI5Yo+BmW9ZvD0iUXQfECGLgvondsEDHSleplJCk8moDygW3sAxnW5x8ylUOkvsL6Dvo+z+PSrg8cCWj4/HLy2dA3gdT5mwm91rQfXJBFEhC7ow9kNcDRnt0Kgs1BOY6IXAubwOrC95yrQ4PwYOvIfU4n6RxOZXepT4Xn8RH4p9qV5nndVGIWxAHMcxtnRWgqEMzpiiklaZNs52rGzk71KSlOQIMPptzzUPzBw30O92YpZZrx/s40ZqKiSPnbmo/6pajfHy9xuicyjcI79rTIUdeA=
