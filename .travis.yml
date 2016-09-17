@@ -4,7 +4,7 @@ node_js:
   - "5"
 
 before_script:
-  - npm install -g bower gulp-cli mocha
+  - npm install -g bower gulp-cli mocha typings
   - npm run-script test-on-travis
   - bower install
   - "export DISPLAY=:99.0"
