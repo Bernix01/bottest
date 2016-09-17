@@ -2,13 +2,13 @@ language: node_js
 node_js:
 - 4.4.6
 env:
-  - CXX=g++-4.8
+- CXX=g++-4.8
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
+    - g++-4.8
 matrix:
   fast_finish: true
   allow_failures:
@@ -21,6 +21,7 @@ deploy:
   provider: heroku
   app: bottest-guillermo
   run:
-    - "cd dist/ && npm start"
+  - cd dist/ && npm start
+  strategy: git
   api_key:
-    secure: uEK8yRY9fiILjP/0HA0uvVEPv9YQcrnOd6KUxyNYbWyrLeNNphRlQVAxkt9gFfadPvu9S01XnxQwZ+HxWoHjd7rl9D4UA1lpCRY94cPcc274Zm5ZLEA8avQqkGCcJCriYFc+g6l00j1cyELM/KYWJJxesnmCZNR5pmSypfH7lt+oZ89MABmxwGN87ja93skNHQsotx200fT/ALWZJCEYxY2S4S3mKOgRXVy3iW4lVaSLpC6Z0zuQUi0i2fvmZIexk4wVzAQmnMXqs79KwCzBbwml/gvcY6G94j3wBtaJdcrTTH4TabyBKY5nruyxGmhzJ5aQ+9iRPwS3YRHYLdQij9X+5Ll8jm4OexNntbO2DC1wvMdQb6j0Iq/wSx+5VLbBZLVCZ/pfuseYOs1xbxZI5Yo+BmW9ZvD0iUXQfECGLgvondsEDHSleplJCk8moDygW3sAxnW5x8ylUOkvsL6Dvo+z+PSrg8cCWj4/HLy2dA3gdT5mwm91rQfXJBFEhC7ow9kNcDRnt0Kgs1BOY6IXAubwOrC95yrQ4PwYOvIfU4n6RxOZXepT4Xn8RH4p9qV5nndVGIWxAHMcxtnRWgqEMzpiiklaZNs52rGzk71KSlOQIMPptzzUPzBw30O92YpZZrx/s40ZqKiSPnbmo/6pajfHy9xuicyjcI79rTIUdeA=
+    secure: dZWeUkVDM/W+v96Kl6pl1vXduOiX9r+ccDErZ1uKZXR/IOTJ1eFkzpAqZr4cjNnGF5Klx9NOg46f+vXB+vvD31vA3N9u96k60QQ0YBJewe8jDy9fYZ8SF3pRocCs5EVatq6swmEvWy7T2ofFjFaAfPAx8cp+Yt/oYs8b11yIkTiN9/n30gVmd1jQR4YebnpxALbJmc5m2RBOHSGX2NkGKptSxu0vMqIUuvxfI1v36OBooLQnmFpH6EFfzjwbkqVUgS/PsxZt8PmxcVAT4LZn/9LPUY1DsS9d5xDxtNcwn7loLS7Risu/nGz66zfHhfT75YySOaS9pRYpr2ZD7p8jbKNSTM7JU1cfYy0ddNoDSIMfvH6cHTDAq/1A5BA195ANG7p29VRdnc0VugDq8qSqII/Z8fRh9ekEIqWLsR+faMC0yXnX74sNiPcih4g0LSpAJl4NjHvmOhwLfTFR+VdH1m6E/61k5Q9p5pjNqksFiltnfdG4zqfUGX9fErtgsYnUTX8MJKWGedmur7gca6N7Aqv6xFFibZi4TSc6/8fnuP4yCB83TfULlP6eo5ZbMiidkPxmqywKdQIfMCvGVqbknElzgdhJWRdVYndnm+KPSn+2gYfDEmMknYSAPmkyw3OXrk+dfLZxxvUU2NS2XQAP+NQDHc7TOVRTAMwowKFolW0=
