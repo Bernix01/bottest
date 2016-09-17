@@ -1,6 +1,11 @@
-.idea
-coverage
 node_modules
-unit_coverage
-bower_components
-typings
+public
+.tmp
+.sass-cache
+.idea
+client/bower_components
+client/index.html
+dist
+/server/config/local.env.js
+npm-debug.log
+coverage
