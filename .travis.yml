@@ -14,14 +14,15 @@ matrix:
   allow_failures:
   - node_js: 5.12.0
 before_script:
-- npm install -g gulp-cli
-- gem install sass
+  - npm install -g gulp-cli
+  - gem install sass
 services: mongodb
+before_deploy:
+  - gulp build
 deploy:
   provider: heroku
   app: bottest-guillermo
   run:
-  - cd dist/ && npm start
-  strategy: git
+    - cd dist/ && npm start
   api_key:
     secure: "afv8WMKzUH+GwecT7ju5iCXulPEpNYjvTbMzKHDMCku6v1b2E6Ml7AIntmmkOMgI2MQ7j0/dsVHl8YC6AZpCnBDM8PbTQQhv9bWA92wJmuIvmuipH0/lGF76n9nFq+3X10ELazPB/vns87SEPxTpDSpwyN4hM/KJmMmB+vzILPX+TNQz3X6E2oA6js+TYncrP0rXw5biNYwug639W+bBvwV+fYhEUcBIEru2zT4Vfx7CBpa8Xuq5/tK7ShxZSOwZ/KnyIw+IRB4SvFJ36dIpQ06KWiOuNwf6/Kswhy4rnzdbOd8i92j5VAXmUG5Lr+Q+gdS/K83QUXXk2wB+sSXe3ThXwaePNclIFsEDRkxh4pyJTombYwK6uHnnL7c91n5jHHoKIBm6PJOnlpXOXSErTyyNQO6kC8nG1toEVQP5xn+4YYXCahTVTTzeCfKt9/dAPBgzstvqI8stvltVPTUh4TbANpAnoBrLYiXWnC8pzcAc3Btiv7vPWWQ0EZAcRp5uwxYHyWmJuV/4QHYrE2opYdoW81cCBwrqTccabxK0id77fOztgVO6v2KJPZ2wASUg6ez6MlBeYsEf1b2u2zb4cKeu7ldfDIdZvYUskzxyVcWYjmGA82e+7cnSgVbLZn4l33XwnS88h1mDVLoIcV4Fl68GGOOIc/qoNIQBGWSj9hk="
