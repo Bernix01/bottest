@@ -16,7 +16,6 @@ matrix:
 before_script:
 - npm install -g gulp-cli
 - gem install sass
-- bower install
 services: mongodb
 deploy:
   provider: heroku
