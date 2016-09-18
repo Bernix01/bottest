@@ -22,6 +22,7 @@ before_script:
 services: mongodb
 before_deploy:
   - gulp build
+  - rm -r node_modules/
 deploy:
   provider: heroku
   app: bottest-guillermo
