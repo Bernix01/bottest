@@ -12,12 +12,11 @@
 
 // Gets a list of Bots
 export function hook(req, res) {
-  if (req.query['hub.mode'] === 'subscribe' &&
-     req.query['hub.verify_token'] === process.env.VALIDATION_TOKEN) {
-   console.log("Validating webhook");
-   return res.status(200).send(req.query['hub.challenge']);
- } else {
-   console.error("Failed validation. Make sure the validation tokens match.");
-   return res.sendStatus(403);
- }
+  if(req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === process.env.VALIDATION_TOKEN) {
+    console.log('Validating webhook');
+    return res.status(200).send(req.query['hub.challenge']);
+  } else {
+    console.error('Failed validation. Make sure the validation tokens match.');
+    return res.sendStatus(403);
+  }
 }
