@@ -22,6 +22,7 @@ before_deploy:
 deploy:
   provider: heroku
   app: bottest-guillermo
+  skip_cleanup: true
   run:
     - cd dist/ && npm start
   api_key:
