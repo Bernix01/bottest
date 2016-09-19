@@ -6,13 +6,8 @@
 
 import errors from './components/errors';
 import path from 'path';
-import cookieParser from 'cookie-parser';
 
 export default function(app) {
-  app.use('/api/bot', require('./api/bot'));
-  // parse cookies
-  // we need this because "cookie" is true in csrfProtection
-  app.use(cookieParser())
     // Insert routes below
   app.use('/api/items', require('./api/item'));
   app.use('/api/things', require('./api/thing'));
