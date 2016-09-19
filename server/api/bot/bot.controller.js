@@ -9,6 +9,10 @@
  */
 
 'use strict';
+const crypto = require('crypto');
+const fetch = require('node-fetch');
+const Wit = require('node-wit').Wit;
+const log = require('node-wit').log;
 
 // Gets a list of Bots
 export function hook(req, res) {
@@ -21,7 +25,8 @@ export function hook(req, res) {
   }
 }
 
-
+// Wit.ai parameters
+const WIT_TOKEN = process.env.WIT_TOKEN;
 
 
 // Messenger API parameters
