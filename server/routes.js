@@ -6,9 +6,13 @@
 
 import errors from './components/errors';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 
 export default function(app) {
-  // Insert routes below
+  // parse cookies
+  // we need this because "cookie" is true in csrfProtection
+  app.use(cookieParser())
+    // Insert routes below
   app.use('/api/items', require('./api/item'));
   app.use('/api/bot', require('./api/bot'));
   app.use('/api/things', require('./api/thing'));
@@ -18,7 +22,7 @@ export default function(app) {
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
-   .get(errors[404]);
+    .get(errors[404]);
 
   // All other routes should redirect to the index.html
   app.route('/*')
