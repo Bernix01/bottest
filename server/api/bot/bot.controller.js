@@ -31,12 +31,18 @@ const WIT_TOKEN = process.env.WIT_TOKEN;
 
 // Messenger API parameters
 const FB_PAGE_TOKEN = process.env.FB_PAGE_TOKEN;
-if (!FB_PAGE_TOKEN) { throw new Error('missing FB_PAGE_TOKEN') }
+if (!FB_PAGE_TOKEN) {
+  throw new Error('missing FB_PAGE_TOKEN')
+}
 const FB_APP_SECRET = process.env.FB_APP_SECRET;
-if (!FB_APP_SECRET) { throw new Error('missing FB_APP_SECRET') }
+if (!FB_APP_SECRET) {
+  throw new Error('missing FB_APP_SECRET')
+}
 
 let FB_VERIFY_TOKEN = process.env.VALIDATION_TOKEN;
-if (!FB_VERIFY_TOKEN) { throw new Error('missing VALIDATION_TOKEN') }
+if (!FB_VERIFY_TOKEN) {
+  throw new Error('missing VALIDATION_TOKEN')
+}
 
 // ----------------------------------------------------------------------------
 // Messenger API specific code
@@ -46,22 +52,28 @@ if (!FB_VERIFY_TOKEN) { throw new Error('missing VALIDATION_TOKEN') }
 
 const fbMessage = (id, text) => {
   const body = JSON.stringify({
-    recipient: { id },
-    message: { text },
+    recipient: {
+      id
+    },
+    message: {
+      text
+    },
   });
   const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body,
-  })
-  .then(rsp => rsp.json())
-  .then(json => {
-    if (json.error && json.error.message) {
-      throw new Error(json.error.message);
-    }
-    return json;
-  });
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body,
+    })
+    .then(rsp => rsp.json())
+    .then(json => {
+      if (json.error && json.error.message) {
+        throw new Error(json.error.message);
+      }
+      return json;
+    });
 };
 
 // ----------------------------------------------------------------------------
@@ -84,14 +96,21 @@ const findOrCreateSession = (fbid) => {
   if (!sessionId) {
     // No session found for user fbid, let's create a new one
     sessionId = new Date().toISOString();
-    sessions[sessionId] = {fbid: fbid, context: {}};
+    sessions[sessionId] = {
+      fbid: fbid,
+      context: {}
+    };
   }
   return sessionId;
 };
 
 // Our bot actions
 const actions = {
-  send({sessionId}, {text}) {
+  send({
+    sessionId
+  }, {
+    text
+  }) {
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
@@ -100,15 +119,15 @@ const actions = {
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
       return fbMessage(recipientId, text)
-      .then(() => null)
-      .catch((err) => {
-        console.error(
-          'Oops! An error occurred while forwarding the response to',
-          recipientId,
-          ':',
-          err.stack || err
-        );
-      });
+        .then(() => null)
+        .catch((err) => {
+          console.error(
+            'Oops! An error occurred while forwarding the response to',
+            recipientId,
+            ':',
+            err.stack || err
+          );
+        });
     } else {
       console.error('Oops! Couldn\'t find user for session:', sessionId);
       // Giving the wheel back to our bot
@@ -148,40 +167,43 @@ export function chat(req, res) {
           const sessionId = findOrCreateSession(sender);
 
           // We retrieve the message content
-          const {text, attachments} = event.message;
+          const {
+            text,
+            attachments
+          } = event.message;
 
           if (attachments) {
             // We received an attachment
             // Let's reply with an automatic message
             fbMessage(sender, 'Sorry I can only process text messages for now.')
-            .catch(console.error);
+              .catch(console.error);
           } else if (text) {
             // We received a text message
 
             // Let's forward the message to the Wit.ai Bot Engine
             // This will run all actions until our bot has nothing left to do
             wit.runActions(
-              sessionId, // the user's current session
-              text, // the user's message
-              sessions[sessionId].context // the user's current session state
-            ).then((context) => {
-              // Our bot did everything it has to do.
-              // Now it's waiting for further messages to proceed.
-              console.log('Waiting for next user messages');
+                sessionId, // the user's current session
+                text, // the user's message
+                sessions[sessionId].context // the user's current session state
+              ).then((context) => {
+                // Our bot did everything it has to do.
+                // Now it's waiting for further messages to proceed.
+                console.log('Waiting for next user messages');
 
-              // Based on the session state, you might want to reset the session.
-              // This depends heavily on the business logic of your bot.
-              // Example:
-              // if (context['done']) {
-              //   delete sessions[sessionId];
-              // }
+                // Based on the session state, you might want to reset the session.
+                // This depends heavily on the business logic of your bot.
+                // Example:
+                // if (context['done']) {
+                //   delete sessions[sessionId];
+                // }
 
-              // Updating the user's current session state
-              sessions[sessionId].context = context;
-            })
-            .catch((err) => {
-              console.error('Oops! Got an error from Wit: ', err.stack || err);
-            })
+                // Updating the user's current session state
+                sessions[sessionId].context = context;
+              })
+              .catch((err) => {
+                console.error('Oops! Got an error from Wit: ', err.stack || err);
+              })
           }
         } else {
           console.log('received event', JSON.stringify(event));
@@ -213,8 +235,8 @@ export function verifyRequestSignature(req, res, buf) {
     var signatureHash = elements[1];
 
     var expectedHash = crypto.createHmac('sha1', FB_APP_SECRET)
-                        .update(buf)
-                        .digest('hex');
+      .update(buf)
+      .digest('hex');
 
     if (signatureHash != expectedHash) {
       throw new Error("Couldn't validate the request signature.");

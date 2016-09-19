@@ -5,8 +5,10 @@ var controller = require('./bot.controller');
 const bodyParser = require('body-parser');
 
 var router = express.Router();
-
+var parserr = bodyParser.json({
+  verify: controller.verifyRequestSignature
+});
 router.get('/', controller.hook);
-router.post('/',bodyParser.json({ verify: controller.verifyRequestSignature }),controller.chat)
+router.post('/', parserr, controller.chat)
 
 module.exports = router;
