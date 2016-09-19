@@ -148,9 +148,7 @@ const wit = new Wit({
 
 
 
-export function chat(err, req, res) {
-  if (err.code !== 'EBADCSRFTOKEN')
-    console.log("derp!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+export function chat(req, res) {
   // Parse the Messenger payload
   // See the Webhook reference
   // https://developers.facebook.com/docs/messenger-platform/webhook-reference
