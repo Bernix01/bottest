@@ -134,8 +134,11 @@ const actions = {
       return Promise.resolve()
     }
   },
-  // You should implement your custom actions here
-  // See https://wit.ai/docs/quickstart
+  // fetch-weather bot executes
+  ['checkHours'](sessionId, context, cb) {
+    context.item = 'item';
+    cb(context);
+  },
 };
 
 // Setting up our bot
