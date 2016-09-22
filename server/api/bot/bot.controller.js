@@ -135,7 +135,7 @@ const actions = {
     }
   },
   // fetch-weather bot executes
-  ['checkHours'](sessionId, context, cb) {
+  ['checkHours']({context, entities}) {
     context.item = 'item';
     cb(context);
   },
