@@ -232,24 +232,12 @@ export function chat(req, res) {
             const sessionId = findOrCreateSession(sender);
 
             // We retrieve the message content
-            const {
-              text,
-              attachments
-            } = event.message;
-
-            if (attachments) {
-              // We received an attachment
-              // Let's reply with an automatic message
-              fbMessage(sender, 'Sorry I can only process text messages for now.')
-                .catch(console.error);
-            } else if (text) {
-              // We received a text message
 
               // Let's forward the message to the Wit.ai Bot Engine
               // This will run all actions until our bot has nothing left to do
               wit.runActions(
                   sessionId, // the user's current session
-                  text, // the user's message
+                  '¿Atienden hoy?', // the user's message
                   sessions[sessionId].context // the user's current session state
                 ).then((context) => {
                   // Our bot did everything it has to do.
