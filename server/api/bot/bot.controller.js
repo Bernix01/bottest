@@ -136,8 +136,12 @@ const actions = {
   },
   // fetch-weather bot executes
   ['checkHours']({context, entities}) {
-    context.item = 'item';
-    cb(context);
+    return new Promise(function(resolve, reject) {
+      // Here should go the api call, e.g.:
+      // context.forecast = apiCall(context.loc)
+      context.item = (new Date()).getHours() < 20;
+      return resolve(context);
+    });
   },
 };
 
