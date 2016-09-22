@@ -135,14 +135,19 @@ const actions = {
     }
   },
   // fetch-weather bot executes
-  ['checkHours']({sessionId, context, text, entities}) {
+  ['checkHours']({
+    sessionId,
+    context,
+    text,
+    entities
+  }) {
     console.log(`Session ${sessionId} received ${text}`);
     console.log(`The current context is ${JSON.stringify(context)}`);
     console.log(`Wit extracted ${JSON.stringify(entities)}`);
     return new Promise(function(resolve, reject) {
       // Here should go the api call, e.g.:
       // context.forecast = apiCall(context.loc)
-      context.item = (new Date()).getHours() < 20;
+      context.response = (new Date()).getHours() < 20 ? 'En este momento sí' : 'No en este rato, regresa mañana.';
       return resolve(context);
     });
   },
@@ -215,9 +220,60 @@ export function chat(req, res) {
                 console.error('Oops! Got an error from Wit: ', err.stack || err);
               })
           }
-        } else {
-          console.log('received event', JSON.stringify(event));
         }
+        if (event.postback) {
+          if (event.postback.payload == 'check-hours') {
+            // Yay! We got a new message!
+            // We retrieve the Facebook user ID of the sender
+            const sender = event.sender.id;
+
+            // We retrieve the user's current session, or create one if it doesn't exist
+            // This is needed for our bot to figure out the conversation history
+            const sessionId = findOrCreateSession(sender);
+
+            // We retrieve the message content
+            const {
+              text,
+              attachments
+            } = event.message;
+
+            if (attachments) {
+              // We received an attachment
+              // Let's reply with an automatic message
+              fbMessage(sender, 'Sorry I can only process text messages for now.')
+                .catch(console.error);
+            } else if (text) {
+              // We received a text message
+
+              // Let's forward the message to the Wit.ai Bot Engine
+              // This will run all actions until our bot has nothing left to do
+              wit.runActions(
+                  sessionId, // the user's current session
+                  text, // the user's message
+                  sessions[sessionId].context // the user's current session state
+                ).then((context) => {
+                  // Our bot did everything it has to do.
+                  // Now it's waiting for further messages to proceed.
+                  console.log('Waiting for next user messages');
+
+                  // Based on the session state, you might want to reset the session.
+                  // This depends heavily on the business logic of your bot.
+                  // Example:
+                  // if (context['done']) {
+                  //   delete sessions[sessionId];
+                  // }
+
+                  // Updating the user's current session state
+                  sessions[sessionId].context = context;
+                })
+                .catch((err) => {
+                  console.error('Oops! Got an error from Wit: ', err.stack || err);
+                })
+            }
+          }
+        }
+        console.log('received event', JSON.stringify(event));
+
       });
     });
   }
