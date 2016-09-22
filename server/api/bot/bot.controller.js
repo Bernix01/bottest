@@ -135,7 +135,10 @@ const actions = {
     }
   },
   // fetch-weather bot executes
-  ['checkHours']({context, entities}) {
+  ['checkHours']({sessionId, context, text, entities}) {
+    console.log(`Session ${sessionId} received ${text}`);
+    console.log(`The current context is ${JSON.stringify(context)}`);
+    console.log(`Wit extracted ${JSON.stringify(entities)}`);
     return new Promise(function(resolve, reject) {
       // Here should go the api call, e.g.:
       // context.forecast = apiCall(context.loc)
