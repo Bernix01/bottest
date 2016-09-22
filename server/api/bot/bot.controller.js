@@ -258,7 +258,7 @@ export function chat(req, res) {
                   console.error('Oops! Got an error from Wit: ', err.stack || err);
                 })
             }
-          }
+
         }
         console.log('received event', JSON.stringify(event));
 
